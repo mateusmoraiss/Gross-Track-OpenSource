@@ -1,12 +1,7 @@
 // Calculadora.js
 // Contém a lógica de cálculo extraída e adaptada de Calculator.jsx
 
-/**
- * Helper para converter uma string (que pode conter vírgula como separador decimal)
- * para um número de ponto flutuante.
- * @param {string|number} value - O valor a ser convertido.
- * @returns {number} O valor convertido para float, ou NaN se a conversão falhar.
- */
+// Garantindo que a entrada seja um número.
 const num = (value) => {
   if (typeof value === 'number') {
     return value;
@@ -17,17 +12,10 @@ const num = (value) => {
   return NaN; // Retorna NaN para tipos não suportados ou undefined/null
 };
 
-/**
- * Realiza os cálculos de gasto com combustível, lucro bruto e gasto por KM.
- * Esta função é uma extração da lógica de `performCalculation` de `Calculator.jsx`.
- * 
- * @param {string|number} km - A quilometragem rodada.
- * @param {string|number} faturamento - O faturamento obtido.
- * @param {string|number} precoCombustivel - O preço do combustível por litro.
- * @param {string|number} consumo - O consumo do veículo em KM/L.
- * @returns {object|null} Um objeto com { gastoCombustivel, lucroBruto, gastoPorKm }
- *                          ou null se os inputs forem inválidos.
- */
+// ------------------------------------------------------------ //
+// Filtrando melhor os números //
+// ------------------------------------------------------------ //
+
 const calcularIndicadoresFinanceiros = (km, faturamento, precoCombustivel, consumo) => {
   // Validação inicial de preenchimento (semelhante à original, mas sem setErro)
   if (km === undefined || km === '' || 
@@ -57,7 +45,10 @@ const calcularIndicadoresFinanceiros = (km, faturamento, precoCombustivel, consu
     return null; // Indica erro de faturamento negativo
   }
 
-  // As fórmulas centrais extraídas
+ // ----------------------------------------------------------//
+  // FÓRMULA USADA NOS CÁLCULOS // 
+ // ----------------------------------------------------------//
+  
   const gastoCombustivel = (numKm / numCons) * numPreco;
   const lucroBruto = numFat - gastoCombustivel;
   const gastoPorKm = numKm > 0 ? gastoCombustivel / numKm : 0; // Evita divisão por zero
@@ -68,12 +59,3 @@ const calcularIndicadoresFinanceiros = (km, faturamento, precoCombustivel, consu
     gastoPorKm
   };
 };
-
-// Exemplo de como o arquivo poderia ser exportado para uso em outros módulos:
-// CommonJS (Node.js)
-// if (typeof module !== 'undefined' && module.exports) {
-//   module.exports = { calcularIndicadoresFinanceiros, num };
-// }
-// ES6 Modules (Navegador e Node.js moderno)
-// export { calcularIndicadoresFinanceiros, num };
-// export default calcularIndicadoresFinanceiros; // Se apenas uma função principal for exportada
